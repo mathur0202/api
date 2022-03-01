@@ -13,3 +13,4 @@ class CorporateManager:
     async def get_all_cprporate(cls):
         _result = await ORMWrapper.raw_sql("SELECT name,spoc_email,type FROM corporates")
         return _result
+
