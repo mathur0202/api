@@ -1,4 +1,5 @@
-__all__ = ["User","Mydb"]
+__all__ = ["User","Mydb","CorporateService"]
 
 from .user import User
 from .mydb import Mydb
+from .corporate import CorporateService
