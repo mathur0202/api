@@ -7,14 +7,18 @@ class Validator:
 
     @classmethod
     def mandatory_params(cls, **kwargs):
+        print(kwargs.items())
         for key, value in kwargs.items():
             if value is None:
                 raise BadRequestException(ErrorMessages.FIELD_REQUIRED.value.format(key=key))
 
     @classmethod
     def param_type_check(cls, required_type, **kwargs):
+        # print(kwargs.items())
         for key, value in kwargs.items():
             try:
+                print(type(value))
+                print(value)
                 value = required_type(value)
             except:
                 raise BadRequestException(ErrorMessages.TYPE_CHECK.value.format(required_type=required_type,
