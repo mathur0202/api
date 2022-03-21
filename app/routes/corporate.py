@@ -1,28 +1,27 @@
 from sanic import Blueprint
 from torpedo import Request, send_response
 from ..managers import CorporateManager
-from app.validator import Validator
-from app.constants import CorporateType
+from ..utils import validator
+from ..schema import Schema
 corporate = Blueprint("corporate", version=4)
+
 
 @corporate.route("/corporate", methods=['GET'])
 async def get_all_corporate(request):
-    _response = await CorporateManager.get_all_cprporate()
+    _response = await CorporateManager.get_all_corporate()
     return send_response(_response)
 
 
 @corporate.route("/corporate", methods=['POST'])
-async def create_corporate(request):
-    payload = request.request_params()
-    Validator.mandatory_params(name=payload.get('name'), phone=payload.get('phone'), spoc_email=payload.get('spoc_email'),
-          spoc_phone=payload.get('spoc_phone'), coupon_code=payload.get('coupon_code'), address=payload.get('address'),
-    domains=payload.get('domains'), logo_url=payload.get('logo_url'), html=payload.get('html'),dashboard_url=payload.get('dashboard_url'))
-
-    Validator.param_in_check('type', payload.get('type'), CorporateType.corporate_type.value)
-
-    Validator.param_type_check(str, name=payload.get('name'), phone=payload.get('phone'), spoc_email=payload.get('spoc_email'),
-          spoc_phone=payload.get('spoc_phone'), coupon_code=payload.get('coupon_code'), address=payload.get('address'),
-          logo_url=payload.get('logo_url'), html=payload.get('html'), dashboard_url=payload.get('dashboard_url'))
-
+@validator(schema=Schema.corporate_schema)
+async def create_corporate(request: Request):
+    payload = request.custom_json()
     _response = await CorporateManager.create_corporate(payload)
+    return send_response(_response)
+
+@corporate.route("/corporate/<name:string>",methods=['GET'])
+async def get_corporate_by_name(request: Request,name):
+    payload = name
+    _response = await CorporateManager.get_corporate_by_name(payload)
+    _response['id'] = str(_response['id'])
     return send_response(_response)

@@ -1,4 +1,4 @@
-from torpedo.db import CustomTextField, ModelUtilMixin, TextArrayField
+from torpedo.db import CustomTextField, ModelUtilMixin, TextArrayField,CITextField
 from tortoise import Model, fields
 from ..constants import CorporateType
 
