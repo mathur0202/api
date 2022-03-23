@@ -8,3 +8,8 @@ class ListenerEventTypes(Enum):
     BEFORE_SERVER_START = "before_server_start"
     BEFORE_SERVER_STOP = "before_server_stop"
     AFTER_SERVER_STOP = "after_server_stop"
+
+
+class CorporateType(Enum):
+    corporate_type = ['employee', 'HR']
+
