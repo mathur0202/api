@@ -34,8 +34,10 @@ async def create_corporate(request: Request):
 @corporate.route("/corporate/<name:string>",methods=['GET'])
 async def get_corporate_by_name(request: Request,name):
     payload = name
+
     _response = await CorporateManager.get_corporate_by_name(payload)
     _response['id'] = str(_response['id'])
+    
     return send_response(_response)
 
 @corporate.route("/presignedurl",methods=['GET'])
