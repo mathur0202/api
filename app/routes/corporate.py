@@ -3,6 +3,9 @@ from torpedo import Request, send_response
 from ..managers import CorporateManager
 from ..utils import validator
 from ..schema import Schema
+
+
+
 corporate = Blueprint("corporate", version=4)
 
 
